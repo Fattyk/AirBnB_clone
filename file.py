@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Pycode style compliant testing"""
-
+"""Add a file to test pycodestyle compliant"""
 from datetime import datetime
 
 
