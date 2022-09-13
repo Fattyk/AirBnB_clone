@@ -3,8 +3,10 @@
 
 from datetime import datetime
 
+
 def print_datetime():
     """Print the current naive datetime"""
     print(datetime.now())
+
 
 print_datetime()
