@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Pycode style compliant testing"""
 
 from datetime import datetime
