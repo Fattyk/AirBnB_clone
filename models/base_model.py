@@ -1,19 +1,30 @@
 #!/usr/bin/python3
-"""BaseModel defines all common attributes/methods for other classes to inherit"""
-
+"""BaseModel modules defines base classes for other classes to inherit"""
 import uuid
 from datetime import datetime
 
+
 class BaseModel:
-    """BaseModel is a class that defines attributes and methods to be inherited by all other classes"""
-
-
+    """BaseModel defines common attribtes and methods."""
     def __init__(self, *args, **kwargs):
         """Initialize a new BaseModel.
+
         Args:
-            self: the object itself
-            *args (any): Unused.
+            *args (turple): any
             **kwargs (dict): Key/value pairs of attributes.
+
+        Example:
+        --------------------------------------
+        >>> from models.base_model import BaseModel
+        >>> base = BaseModel()
+        >>> base.name = "Fat Model"
+        >>> base.save()
+        >>> base.name
+        'Fat Model'
+        >>> type(base.id) == str
+        True
+        >>> len(base.id) == 36
+        True
         """
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
@@ -21,23 +32,27 @@ class BaseModel:
 
     def __str__(self):
         """ return: [<class name>] (<self.id>) <self.__dict__>
-        Args:
-            self: The object itself
+
+        Example:
+        ---------------------------------------
+        >>> from models.base_model import BaseModel
+        >>> base = BaseModel()
+        >>> base.name = "Fat Model"
+        >>> base.save()
+        >>> string = str(base)
+        >>> ('[BaseModel]' in string) == True
+        True
+        >>> ("Fat Model" in string) == True
+        True
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
-        """ updates the public instance attribute updated_at with the current datetime
-        Args:
-            self: The object itself
-        """
+        """ updates updated_at with the current datetime"""
         self.updated_at = datetime.now()
 
     def to_dict(self):
-        """ returns a dictionary containing all keys/values of __dict__ of the instance
-        Args:
-            self: The object itself
-        """
+        """ returns an instance dictionary keys/values pairs"""
         my_dict = self.__dict__
         my_dict["__class__"] = self.__class__.__name__
         my_dict["created_at"] = my_dict["created_at"].isoformat()
