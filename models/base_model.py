@@ -7,7 +7,7 @@ from datetime import datetime
 class BaseModel:
     """BaseModel defines common attribtes and methods."""
     def __init__(self, *args, **kwargs):
-        """Initialize a new BaseModel.
+        """Initialize a new BaseModel or create BaseModel from dict
 
         Args:
             *args (turple): any
@@ -26,9 +26,17 @@ class BaseModel:
         >>> len(base.id) == 36
         True
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if not kwargs:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+        else:
+            for key, value in kwargs.items():
+                if key == '__class__':
+                    continue
+                elif key == "created_at" or key == "updated_at":
+                    value = datetime.fromisoformat(value)
+                setattr(self, key, value)
 
     def __str__(self):
         """ return: [<class name>] (<self.id>) <self.__dict__>
